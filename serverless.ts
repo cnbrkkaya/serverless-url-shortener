@@ -17,7 +17,17 @@ const serverlessConfiguration: AWS = {
       shouldStartNameWithService: true,
     },
     environment: {
-      urlTable: "${self:custom.urlTableName}",
+      URL_TABLE_NAME: "${self:custom.urlTableName}",
+      BASE_URL: {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            { Ref: "HttpApi" },
+            ".execute-api.${self:provider.region}.amazonaws.com",
+          ],
+        ],
+      },
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
