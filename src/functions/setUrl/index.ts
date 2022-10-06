@@ -1,5 +1,6 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { formatJSONResponse } from "@libs/apiGateway";
+import { dynamo } from "@libs/dynamo";
 import { v4 as uuidv4 } from "uuid";
 
 export const handler = async (event: APIGatewayProxyEvent) => {
@@ -20,7 +21,7 @@ export const handler = async (event: APIGatewayProxyEvent) => {
       shortUrl,
     };
 
-    // await dynamo.write(data, tableName);
+    await dynamo.write(data, tableName);
 
     return formatJSONResponse({
       statusCode: 200,

@@ -11,6 +11,15 @@ const serverlessConfiguration: AWS = {
     name: "aws",
     runtime: "nodejs14.x",
     profile: "sls-profile-1",
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: ["dynamodb:*"],
+        Resource:
+          "arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.urlTableName}",
+      },
+    ],
+
     region: "eu-central-1",
     apiGateway: {
       minimumCompressionSize: 1024,
