@@ -6,7 +6,6 @@ export const handler = async (event: APIGatewayProxyEvent) => {
   try {
     const tableName = process.env.URL_TABLE_NAME;
     const { code = "" } = event.pathParameters;
-
     if (!code) {
       return formatJSONResponse({
         statusCode: 400,
@@ -20,8 +19,11 @@ export const handler = async (event: APIGatewayProxyEvent) => {
     const originalUrl = response.originalUrl;
 
     return formatJSONResponse({
-      statusCode: 200,
-      data: { originalUrl },
+      statusCode: 301,
+      data: {},
+      headers: {
+        Location: originalUrl,
+      },
     });
   } catch (error) {
     console.log("error", error);
