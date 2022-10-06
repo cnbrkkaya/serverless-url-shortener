@@ -9,11 +9,15 @@ export const handler = async (event: APIGatewayProxyEvent) => {
     const baseUrl = process.env.BASE_URL;
 
     const body = JSON.parse(event.body);
-    const originalUrl = body.url;
+    let originalUrl = body.url;
 
     const code = uuidv4().substring(0, 8);
 
     const shortUrl = `${baseUrl}/${code}`;
+
+    if (!originalUrl.startsWith("https://")) {
+      originalUrl = `https://${originalUrl}`;
+    }
 
     const data = {
       id: code,
